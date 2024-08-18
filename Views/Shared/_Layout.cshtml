@@ -1,0 +1,251 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - 兔孜</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css" />
+   
+
+    <!-- Include jQuery and Bootstrap JS -->
+    <script src="/css/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="/tuzi_tsuki.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" >
+    <link rel="stylesheet" href="/fontawesome-free-6.5.2-web/css/all.min.css" asp-append-version="true">
+    <link rel="icon" type="image/png" href="~/3_犯花痴.png">
+    <style>
+        /* Link/Button Base Style */
+        .sort-link {
+            padding: 8px 12px;
+            background-color: #f8f9fa;
+            color: #007bff;
+            text-decoration: none;
+            border: 1px solid #007bff;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+            /* Hover and Active States */
+            .sort-link:hover, .sort-link:focus {
+                background-color: #007bff;
+                color: #ffffff;
+                text-decoration: none; /* Removes underline on hover */
+            }
+
+            /* Optional: Active or Selected State Styling */
+            .sort-link.active {
+                background-color: #0056b3;
+                color: #ffffff;
+                border-color: #004085;
+            }
+
+        .blurred-background {
+            /* Set the dimensions of the div */
+            width: 100%;
+            height: 500px;
+            position: relative;
+            overflow: hidden;
+            /* Set the background image */
+            background-image: url('/image/background.jpg');
+            background-size: contain;
+            background-position: center;
+            background-repeat: repeat-y;
+            /* Adding a pseudo-element to apply the blur */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+            .blurred-background::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-image: inherit; /* Inherit the background from the parent */
+                filter: blur(10px); /* Adjust the blur radius as needed */
+                z-index: -1;
+            }
+
+        .blurred-background1 {
+            /* Set the dimensions of the div */
+            width: 100%;
+            height: 100%;
+            position: relative;
+            /* Set the background image */
+            background-image: url('/image/background1.jpg');
+            background-size: contain;
+            
+        }  
+
+        .songsc{
+            background-color:azure;
+            opacity: 0.9;
+            filter:none;
+        }
+
+        table {
+            width: 100%; /* Ensure the table uses full width */
+            table-layout: fixed; /* This helps in applying the word break styling */
+        }
+
+        td, th {
+            word-wrap: break-word; /* Allow long words to be able to break and wrap onto the next line */
+            white-space: normal; /* Ensures that whitespace is handled normally */
+            overflow-wrap: break-word; /* Standardized version of word-wrap */
+        }
+
+        #loadingSpinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index: 9999; /* High z-index to ensure it is on top of all other content */
+}
+
+.css-spinner {
+    border: 5px solid rgba(0, 0, 0, 0.1);
+    border-top: 5px solid blue; /* Change color as needed */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 2s linear infinite;
+}
+
+@@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-right: 0%; /* Default margin */
+}
+
+@@media (min-width: 600px) { /* Adjust this breakpoint as needed */
+    .grid-container {
+        margin-right: 50%;
+    }
+}
+@@media screen and (max-width: 600px) {
+    .hide-on-mobile {
+        display: none;
+    }
+}
+.form-control {
+width:50%;
+}
+
+        .pagination {
+            display: flex;
+            list-style: none;
+            padding: 0;
+        }
+
+            .pagination .page-item {
+                margin: 0 2px;
+            }
+
+                .pagination .page-item.disabled .page-link, .pagination .page-item.active .page-link {
+                    color: #fff;
+                    background-color: #007bff;
+                }
+
+            .pagination .page-link {
+                color: #007bff;
+                text-decoration: none;
+                padding: 5px 10px;
+                border: 1px solid #ddd;
+            }
+
+                .pagination .page-link:hover {
+                    border-color: #007bff;
+                }
+
+
+    </style>
+    <script>
+        window.onload = function () {
+            var spinner = document.getElementById('loadingSpinner');
+            spinner.style.display = 'none';
+        };
+        function copyTextToClipboard(elementId) {
+            var textElement = document.getElementById('textToCopy'+elementId);
+            var button = document.getElementById('songButton' + elementId);
+            var text = textElement.innerText || textElement.textContent; // Get the text content of the element
+
+            navigator.clipboard.writeText(text)
+                .then(() => button.textContent = "已复制")
+                .catch(err => console.error('Failed to copy text: ', err));
+        }
+
+        function fillForm(type) {
+            document.getElementById('type').value = document.getElementById('type').value+' '+ type;
+        }
+ 
+
+    </script>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <img src="/image/tubiao1.jpg" />
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">兔孜-Tsuki</a>
+                
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">主页</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Share">分享</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">其他</a>
+                        </li>
+                    </ul>
+
+                    <partial name="_Identity.cshtml" />
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div id="loadingSpinner">
+        <div class="css-spinner"></div>
+    </div>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            <h9><i class="bi bi-alarm"></i>网站装修中</h9>
+            &copy; 2024 - tuzi_tsuki - <a asp-area="" asp-controller="Home" asp-action="Privacy">关于</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

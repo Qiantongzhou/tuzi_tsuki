@@ -1,0 +1,77 @@
+﻿@using tuzi_tsuki.Models;
+@model SongVM;
+
+@{
+    ViewData["Title"] = "更新歌";
+}
+
+<div class="row">
+    <div class="col-md offset">
+        <p>
+            <h4>新歌</h4>
+        </p>
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="col-md alert alert-danger">
+                <span> - @TempData["Error"] </span>
+            </div>
+        }
+
+        <div class="row">
+            <div class="col-md offset">
+                <form asp-action="UpdateSong2">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group">
+                        <label asp-for="SongName" class="control-label"></label>
+                        <input asp-for="SongName" class="form-control" />
+                        <span asp-validation-for="SongName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Actor" class="control-label"></label>
+                        <input asp-for="Actor" class="form-control" />
+                        <span asp-validation-for="Actor" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="alumn" class="control-label"></label>
+                        <input asp-for="alumn" class="form-control" />
+                        <span asp-validation-for="alumn" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="type" class="control-label"></label>
+                        <button type="button" onclick="fillForm('古风')"   class="btn btn-secondary btn-sm">古风</button>
+                        <button type="button" onclick="fillForm('情歌')"   class="btn btn-secondary btn-sm">情歌</button>
+                        <button type="button" onclick="fillForm('emo')"   class="btn btn-secondary btn-sm">emo</button>
+                        <button type="button" onclick="fillForm('小甜歌')" class="btn btn-secondary btn-sm">小甜歌</button>
+                        <button type="button" onclick="fillForm('中文')"   class="btn btn-secondary btn-sm">中文</button>
+                        <button type="button" onclick="fillForm('英文')"   class="btn btn-secondary btn-sm">英文</button>
+                        <button type="button" onclick="fillForm('日文')"   class="btn btn-secondary btn-sm">日文</button>
+                        <button type="button" onclick="fillForm('韩文')"   class="btn btn-secondary btn-sm">韩文</button>
+                        <button type="button" onclick="fillForm('本兮')"   class="btn btn-secondary btn-sm">本兮</button>
+                        <button type="button" onclick="fillForm('高音')"   class="btn btn-secondary btn-sm">高音</button>
+                        <button type="button" onclick="fillForm('整活')" class="btn btn-secondary btn-sm">整活</button>
+                        <button type="button" onclick="fillForm('欢快')" class="btn btn-secondary btn-sm">欢快</button>
+                        <button type="button" onclick="fillForm('烧兔兔')" class="btn btn-secondary btn-sm">烧兔兔</button>
+                        <button type="button" onclick="fillForm('说唱')" class="btn btn-secondary btn-sm">说唱</button>
+                        <button type="button" onclick="fillForm('女团')" class="btn btn-secondary btn-sm">女团</button>
+                        <button type="button" onclick="fillForm('pk精选')" class="btn btn-secondary btn-sm">pk精选</button>
+                        <button type="button" onclick="fillForm('天籁')" class="btn btn-secondary btn-sm">天籁</button>
+                        <input asp-for="type" class="form-control" />
+                        <span asp-validation-for="type" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Date" class="control-label"></label>
+                        <input asp-for="Date" class="form-control" />
+                        <span asp-validation-for="Date" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input class="btn btn-outline-success float-right" type="submit" value="添加" />
+                        <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Index">主页</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,205 @@
+﻿@model SongsViewModel
+<div class="blurred-background1">
+    <div class="songsc">
+        <h2>歌单 (@(Model.PageInfo.TotalItems))首</h2>
+
+    
+<form class="form-inline my-2 my-lg-0" asp-controller="Songs" asp-action="Filter" style="padding-right: 25px;">
+    <img src="/image/tutu/obs/small/kcall.png" alt="打call" style="width:8%; height:8%;" />
+    <input name="searchString" type="text" class="form-control" placeholder="搜索..." aria-label="Recipient's username" aria-describedby="button-addon2">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="bi bi-search"></i></button>
+</form>
+
+
+<p>
+    <br />
+            <a class="sort-link" asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-page="@(Model.PageInfo.CurrentPage)" asp-route-pagesize="@(Model.PageInfo.ItemsPerPage)"><i class="fas fa-sort-alpha-down"></i> 按名字排序</a> |
+            <a class="sort-link" asp-action="Index" asp-route-sortOrder="@ViewData["AuthorSortParm"]" asp-route-page="@(Model.PageInfo.CurrentPage)" asp-route-pagesize="@(Model.PageInfo.ItemsPerPage)"><i class="fas fa-sort-alpha-up"></i> 按作者排序</a> |
+            <a class="sort-link" asp-action="Index" asp-route-sortOrder="@ViewData["LengthSortParm"]" asp-route-page="@(Model.PageInfo.CurrentPage)" asp-route-pagesize="@(Model.PageInfo.ItemsPerPage)"><i class="fas fa-sort-amount-down"></i> 按长度排序</a>
+            <p>显示范围</p>
+        <a class="sort-link" asp-action="Index" asp-route-pagesize=10>10</a> |
+        <a class="sort-link" asp-action="Index" asp-route-pagesize=20>20</a> |
+        <a class="sort-link" asp-action="Index" asp-route-pagesize=50>50</a> |
+        <a class="sort-link" asp-action="Index" asp-route-pagesize=300>300</a>
+        <p></p>
+        <p>标签</p>
+            <div class="grid-container" >
+            <form class="" asp-controller="Songs" asp-action="Filter" style="">
+                <!-- Hidden input with preset value -->
+                <input name="searchString" type="hidden" value="本兮">
+
+                <!-- Submit button -->
+                <button class="btn btn-dark my-2 my-sm-0" type="submit">本兮</button>
+            </form>
+            <form class="" asp-controller="Songs" asp-action="Filter" style="">
+                <!-- Hidden input with preset value -->
+                <input name="searchString" type="hidden" value="古风">
+
+                <!-- Submit button -->
+                    <button class="btn btn-dark my-2 my-sm-0" type="submit">古风</button>
+            </form>
+            <form class="" asp-controller="Songs" asp-action="Filter" style="">
+                <!-- Hidden input with preset value -->
+                <input name="searchString" type="hidden" value="emo">
+
+                <!-- Submit button -->
+                    <button class="btn btn-dark my-2 my-sm-0" type="submit">emo</button>
+            </form>
+            <form class="" asp-controller="Songs" asp-action="Filter" style="">
+                <!-- Hidden input with preset value -->
+                <input name="searchString" type="hidden" value="小甜歌">
+
+                <!-- Submit button -->
+                    <button class="btn btn-dark my-2 my-sm-0" type="submit">小甜歌</button>
+            </form>
+                <form class="" asp-controller="Songs" asp-action="Filter" style="">
+                    <!-- Hidden input with preset value -->
+                    <input name="searchString" type="hidden" value="高音">
+
+                    <!-- Submit button -->
+                    <button class="btn btn-dark my-2 my-sm-0" type="submit">高音</button>
+                </form>
+            <form class="" asp-controller="Songs" asp-action="Filter" style="">
+                <!-- Hidden input with preset value -->
+                <input name="searchString" type="hidden" value="整活">
+
+                <!-- Submit button -->
+                <button class="btn btn-dark my-2 my-sm-0" type="submit">整活</button>
+            </form>
+            <form class="" asp-controller="Songs" asp-action="Filter" style="">
+                <!-- Hidden input with preset value -->
+                <input name="searchString" type="hidden" value="烧兔兔">
+
+                <!-- Submit button -->
+                <button class="btn btn-dark my-2 my-sm-0" type="submit">烧</button>
+            </form>
+            </div>
+            <div class="grid-container" >
+            <form class="" asp-controller="Songs" asp-action="Filter" style="">
+                <!-- Hidden input with preset value -->
+                <input name="searchString" type="hidden" value="中文">
+
+                <!-- Submit button -->
+                    <button class="btn btn-dark my-2 my-sm-0" type="submit">中文</button>
+            </form>
+            <form class="" asp-controller="Songs" asp-action="Filter" style="">
+                <!-- Hidden input with preset value -->
+                <input name="searchString" type="hidden" value="韩文">
+
+                <!-- Submit button -->
+                    <button class="btn btn-dark my-2 my-sm-0" type="submit">韩文</button>
+            </form>
+            <form class="" asp-controller="Songs" asp-action="Filter" style="">
+                <!-- Hidden input with preset value -->
+                <input name="searchString" type="hidden" value="日文">
+
+                <!-- Submit button -->
+                    <button class="btn btn-dark my-2 my-sm-0" type="submit">日文</button>
+            </form>
+            <form class="" asp-controller="Songs" asp-action="Filter" style="">
+                <!-- Hidden input with preset value -->
+                <input name="searchString" type="hidden" value="英文">
+
+                <!-- Submit button -->
+                    <button class="btn btn-dark my-2 my-sm-0" type="submit">英文</button>
+            </form>
+            </div>
+</p>
+
+        <table class="table-container">
+    <thead>
+        <tr>
+            <th>
+                歌名
+            </th>
+            <th>
+                作者
+            </th>
+                    <th class="hide-on-mobile">
+                专辑
+            </th>
+            <th>
+                类型
+            </th>
+                    <th class="hide-on-mobile">
+                复制点歌到直播间
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var song in Model.Songs)
+        {
+            <tr>
+                <td>@song.Name
+                    <br>
+                            <button id="songButton@($"{song.Id}")" class="btn btn-outline-primary" onclick="copyTextToClipboard('@($"{song.Id}")')">点歌</button>
+                </td>
+                <td>@song.Author</td>
+                        <td class="hide-on-mobile">@song.Alumn</td>
+                <td>@song.type</td>
+           
+                <td>
+                            <p id="@($"textToCopy{song.Id}")" class="hide-on-mobile">
+                    @song.copystring
+                </p>
+               
+                
+                </td>
+                @if(User.IsInRole("Administrator")){
+                            <td>
+                                <form asp-action="Update" asp-route-id="@song.Id">
+                                    <input type="hidden" />
+                                    <input type="submit" value="更新" class="btn btn-dark float-right" />
+                                </form>
+
+                            </td>
+                <td>
+                    <form asp-action="Delete" asp-route-id="@song.Id">
+                        <input type="hidden"  />
+                        <input type="submit"  value="删除" class="btn btn-danger float-right" />
+                    </form>
+                    
+                </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <!-- Previous Page Link -->
+                <li class="page-item @(Model.PageInfo.CurrentPage == 1 ? "disabled" : "")">
+                    <a class="page-link" asp-action="Index" asp-route-page="@(Model.PageInfo.CurrentPage - 1)" asp-route-pagesize="@(Model.PageInfo.ItemsPerPage)" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li>
+                    <p>...</p>
+                </li>
+                <!-- Dynamic Page Numbers: Display a range around the current page -->
+                @{
+                    int startPage = Math.Max(1, Model.PageInfo.CurrentPage - 4); // Show 2 pages before current
+                    int endPage = Math.Min(Model.PageInfo.TotalPages, Model.PageInfo.CurrentPage + 4); // Show 2 pages after current
+
+                    for (int i = startPage; i <= endPage; i++)
+                    {
+                        <li class="page-item @(i == Model.PageInfo.CurrentPage ? "active" : "")">
+                            <a class="page-link" asp-action="Index" asp-route-page="@i" asp-route-pagesize="@(Model.PageInfo.ItemsPerPage)">@i</a>
+                        </li>
+                    }
+                }
+                <li >
+                <p>...</p>
+                </li>
+                <!-- Next Page Link -->
+                <li class="page-item @(Model.PageInfo.CurrentPage == Model.PageInfo.TotalPages ? "disabled" : "")">
+                    <a class="page-link" asp-action="Index" asp-route-page="@(Model.PageInfo.CurrentPage + 1)" asp-route-pagesize="@(Model.PageInfo.ItemsPerPage)" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <img src="/image/tuzi_icon.jpg" alt="兔兔最可爱了" style="width:190px; height:100px;" />
+    </div>
+   
+</div>

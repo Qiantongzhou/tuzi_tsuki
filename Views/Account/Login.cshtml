@@ -1,0 +1,44 @@
+﻿@using tuzi_tsuki.Models;
+@model LoginVM;
+@{ 
+    ViewData["Title"] = "登录";
+}
+
+<div class="row">
+    <div class="col-md offset">
+        <p>
+            <h4>登录您的账号</h4>
+        </p>
+
+        @if(TempData["Error"] != null)
+            {
+                <div class="col-md-12 alert alert-danger">
+                    <span><b>不好意思!</b> - @TempData["Error"] </span>
+                </div>
+            }
+
+        <div class="row">
+            <div class="col-md offset">
+                <form asp-action="Login">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group">
+                        <label asp-for="FullName" class="control-label"></label>
+                        <input asp-for="FullName" class="form-control" />
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password" class="control-label"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input class="btn btn-outline-success float-right" type="submit" value="登录" />
+                        <a class="btn btn-outline-secondary" asp-controller="Movies" asp-action="Index">取消</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
