@@ -272,6 +272,7 @@ namespace tuzi_tsuki.Controllers
         }
         public async Task<bool> SetSong(songVM2 SongVM1)
         {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
             foreach (SongVM songVM in ParseSongs(SongVM1.Songtext))
             {
                 var temp = songs.Where(n => n.Name.Equals( songVM.SongName));
@@ -279,7 +280,7 @@ namespace tuzi_tsuki.Controllers
                 {
                     if (temp.Where(n => n.Author.Equals(songVM.Actor)).Count() != 0)
                     {
-                        Console.WriteLine("存在 " +temp.First().Name + " " + temp.First().Author);
+                        Console.WriteLine("inlist " +temp.First().Name + " " + temp.First().Author);
 
 
                     }
@@ -287,11 +288,11 @@ namespace tuzi_tsuki.Controllers
                     {
                         if (!await firebaseHelper.UpdateData("abc_123", "Songdb", EncodeToHex(songVM.SongName) + "_" + EncodeToHex(songVM.Actor), new { Songname = EncodeToHex(songVM.SongName), author = EncodeToHex(songVM.Actor), Alumn = EncodeToHex(songVM.alumn), date = EncodeToHex(songVM.Date) }))
                         {
-                            Console.WriteLine("失败 " + songVM.SongName + " " + songVM.Actor);
+                            Console.WriteLine("fail " + songVM.SongName + " " + songVM.Actor);
                         }
                         else
                         {
-                            Console.WriteLine("添加成功 " + songVM.SongName + " " + songVM.Actor);
+                            Console.WriteLine("success " + songVM.SongName + " " + songVM.Actor);
                         }
                     }
 
@@ -301,11 +302,11 @@ namespace tuzi_tsuki.Controllers
                 {
                     if (!await firebaseHelper.UpdateData("abc_123", "Songdb", EncodeToHex(songVM.SongName) + "_" + EncodeToHex(songVM.Actor), new { Songname = EncodeToHex(songVM.SongName), author = EncodeToHex(songVM.Actor), Alumn = EncodeToHex(songVM.alumn), date = EncodeToHex(songVM.Date) }))
                     {
-                        Console.WriteLine("失败 " + songVM.SongName + " " + songVM.Actor);
+                        Console.WriteLine("fail " + songVM.SongName + " " + songVM.Actor);
                     }
                     else
                     {
-                        Console.WriteLine("添加成功 " + songVM.SongName + " " + songVM.Actor);
+                        Console.WriteLine("success " + songVM.SongName + " " + songVM.Actor);
                     }
 
 
