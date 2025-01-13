@@ -12,11 +12,12 @@ namespace tuzi_tsuki.Controllers
     public class DataController : Controller
     {
         FirebaseHelper firebaseHelper;
-        
+        FirebaseHelper firebaseHelper1;
         int itemCount = 10;
         public DataController()
         {
             this.firebaseHelper = new FirebaseHelper("https://tuzitsuki-default-rtdb.firebaseio.com");
+            this.firebaseHelper1 = new FirebaseHelper("https://tuzigiftdb-default-rtdb.firebaseio.com");
         }
         [HttpPost]
         public async Task<IActionResult> ReceiveJsonFans()
@@ -169,7 +170,28 @@ namespace tuzi_tsuki.Controllers
             // Return the JSON object directly, no need to serialize again
             return Json(JsonConvert.SerializeObject(lastObject));
         }
+        public async Task<IActionResult> Getzhiboinfogift(string date,string roomId)
+        {
+            if (string.IsNullOrEmpty(date))
+            {
+                return BadRequest("Received data is null or empty.");
+            }
+            if (string.IsNullOrEmpty(roomId))
+            {
+                return BadRequest("Received data is null or empty.");
+            }
+            // Get the last object from Firebase
+            object lastObject = await firebaseHelper1.GetpureData<object>(date, roomId);
 
+            // If the last object is null, return a NotFound result
+            if (lastObject == null)
+            {
+                return NotFound("No data found for the provided uid.");
+            }
+
+            // Return the JSON object directly, no need to serialize again
+            return Json(lastObject);
+        }
         public string gettime()
         {
             // Get the current date and time in UTC

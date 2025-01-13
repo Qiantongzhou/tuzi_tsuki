@@ -44,6 +44,17 @@ namespace tuzi_tsuki.firebase
 
             return data;
         }
+        public async Task<string> GetpureData<T>(string accessString, string fieldName)
+        {
+            //string dateNode = DateTime.UtcNow.ToString(dateFormat, CultureInfo.InvariantCulture);
+            
+            var data = await firebaseClient
+                .Child(accessString)
+                .Child(fieldName)
+                .OnceAsJsonAsync();
+
+            return data;
+        }
         public async Task<string> GetData<T>(string accessString, string fieldName,string fieldName2)
         {
             //string dateNode = DateTime.UtcNow.ToString(dateFormat, CultureInfo.InvariantCulture);
